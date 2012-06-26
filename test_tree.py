@@ -4,21 +4,11 @@ from nose.tools import assert_equal
 TECHNOLOGIES = { 
     'name': 'Technology',
     'children': [
-    {
-        'name': 'Programming',
-        'children': [
-        {'name': 'Python'},
-        {'name': 'Ruby'}
-        ]
-    },
-    {
-        'name': 'Enterprise',
-        'children': [ 
-        {'name': 'Mac'},
-        {'name': 'Mobile'}
-        ]
-    }]
-}
+        {'name': 'Programming',
+        'children': [ {'name': 'Python'}, {'name': 'Ruby'}]},
+        {'name': 'Enterprise',
+         'children': [ {'name': 'Mac'}, {'name': 'Mobile'}]}]
+    }
 
 
 def test_iter_tree():
