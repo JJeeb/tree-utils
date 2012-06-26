@@ -1,4 +1,4 @@
-from tree import tree
+from tree import tree, enumerate_paths
 from nose.tools import assert_equal
 
 TECHNOLOGIES = { 
@@ -10,6 +10,17 @@ TECHNOLOGIES = {
          'children': [ {'name': 'Mac'}, {'name': 'Mobile'}]}]
     }
 
+
+def test_enumerate_paths():
+    assert_equal([
+        (['Technology'], 'Technology'),
+        (['Technology', 'Programming'], 'Programming'),
+        (['Technology', 'Programming', 'Python'], 'Python'),
+        (['Technology', 'Programming', 'Ruby'], 'Ruby'),
+        (['Technology', 'Enterprise'], 'Enterprise'),
+        (['Technology', 'Enterprise', 'Mac'], 'Mac'),
+        (['Technology', 'Enterprise', 'Mobile'], 'Mobile')],
+        list((path, node['name']) for path, node in enumerate_paths(TECHNOLOGIES)))
 
 def test_iter_tree():
     assert_equal([{'children': [{'children': [{'name': 'Python'}, {'name': 'Ruby'}],
