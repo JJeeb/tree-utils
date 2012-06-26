@@ -1,4 +1,4 @@
-from tree import tree, enumerate_paths
+from tree import tree, enumerate_paths, find_by_path
 from nose.tools import assert_equal
 
 TECHNOLOGIES = { 
@@ -21,6 +21,15 @@ def test_enumerate_paths():
         (['Technology', 'Enterprise', 'Mac'], 'Mac'),
         (['Technology', 'Enterprise', 'Mobile'], 'Mobile')],
         list((path, node['name']) for path, node in enumerate_paths(TECHNOLOGIES)))
+
+
+def test_find_by_path():
+   assert_equal({'name': 'Python'},
+        find_by_path(TECHNOLOGIES, ['Technology', 'Programming', 'Python']))
+  
+def test_find_by_path_when_not_found(): 
+   assert_equal(None,
+        find_by_path(TECHNOLOGIES, ['Technology', 'does_not_exist']))
 
 def test_iter_tree():
     assert_equal([{'children': [{'children': [{'name': 'Python'}, {'name': 'Ruby'}],
