@@ -17,15 +17,7 @@ TECHNOLOGIES = {
         {'name': 'Mac'},
         {'name': 'Mobile'}
         ]
-    },
-    {
-        'name': 'News',
-        'children' : [
-        {'name' :'Blogging'},
-        {'name' :'News'}
-        ]
-    }
-    ]
+    }]
 }
 
 
@@ -33,19 +25,14 @@ def test_iter_tree():
     assert_equal([{'children': [{'children': [{'name': 'Python'}, {'name': 'Ruby'}],
                    'name': 'Programming'},
                   {'children': [{'name': 'Mac'}, {'name': 'Mobile'}],
-                   'name': 'Enterprise'},
-                  {'children': [{'name': 'Blogging'}, {'name': 'News'}],
-                   'name': 'News'}],
+                   'name': 'Enterprise'}],
      'name': 'Technology'},
     {'children': [{'name': 'Python'}, {'name': 'Ruby'}], 'name': 'Programming'},
     {'name': 'Python'},
     {'name': 'Ruby'},
     {'children': [{'name': 'Mac'}, {'name': 'Mobile'}], 'name': 'Enterprise'},
     {'name': 'Mac'},
-    {'name': 'Mobile'},
-    {'children': [{'name': 'Blogging'}, {'name': 'News'}], 'name': 'News'},
-    {'name': 'Blogging'},
-    {'name': 'News'}],
+    {'name': 'Mobile'}],
     list(tree(TECHNOLOGIES)))
 
 def is_leaf(e):
@@ -53,11 +40,11 @@ def is_leaf(e):
 
 def test_generator_expression():
     assert_equal(['Technology', 'Programming', 'Python', 'Ruby', 
-                'Enterprise', 'Mac', 'Mobile', 'News', 'Blogging', 'News'], 
-    list(e['name'] for e in tree(TECHNOLOGIES)))
+                'Enterprise', 'Mac', 'Mobile'], 
+        list(e['name'] for e in tree(TECHNOLOGIES)))
 
-    assert_equal([ 'Python', 'Ruby', 'Mac', 'Mobile',  'Blogging', 'News'], 
-    list(e['name'] for e in tree(TECHNOLOGIES) if is_leaf(e)))
+    assert_equal(['Python', 'Ruby', 'Mac', 'Mobile'], 
+        list(e['name'] for e in tree(TECHNOLOGIES) if is_leaf(e)))
 
 def test_update_with_side_effect():
     technologies = { 
