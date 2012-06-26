@@ -1,3 +1,7 @@
+.Python
+include
+lib
+man
 *.py[co]
 
 # Packages
