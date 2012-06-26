@@ -26,13 +26,13 @@ def test_iter_tree():
                    'name': 'Programming'},
                   {'children': [{'name': 'Mac'}, {'name': 'Mobile'}],
                    'name': 'Enterprise'}],
-     'name': 'Technology'},
-    {'children': [{'name': 'Python'}, {'name': 'Ruby'}], 'name': 'Programming'},
-    {'name': 'Python'},
-    {'name': 'Ruby'},
-    {'children': [{'name': 'Mac'}, {'name': 'Mobile'}], 'name': 'Enterprise'},
-    {'name': 'Mac'},
-    {'name': 'Mobile'}],
+                 'name': 'Technology'},
+            {'children': [{'name': 'Python'}, {'name': 'Ruby'}], 'name': 'Programming'},
+            {'name': 'Python'},
+            {'name': 'Ruby'},
+            {'children': [{'name': 'Mac'}, {'name': 'Mobile'}], 'name': 'Enterprise'},
+            {'name': 'Mac'},
+            {'name': 'Mobile'}],
     list(tree(TECHNOLOGIES)))
 
 def is_leaf(e):
