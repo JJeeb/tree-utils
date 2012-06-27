@@ -1,4 +1,4 @@
-from tree import tree, enumerate_paths, find_by_path
+from tree import iter_tree, enumerate_paths, find_by_path
 from nose.tools import assert_equal
 
 TECHNOLOGIES = { 
@@ -44,15 +44,15 @@ class TestTree:
                 {'children': [{'name': 'Mac'}, {'name': 'Mobile'}], 'name': 'Enterprise'},
                 {'name': 'Mac'},
                 {'name': 'Mobile'}],
-        list(tree(TECHNOLOGIES)))
+        list(iter_tree(TECHNOLOGIES)))
 
     def test_generator_expression(self):
         assert_equal(['Technology', 'Programming', 'Python', 'Ruby',
                     'Enterprise', 'Mac', 'Mobile'],
-            list(e['name'] for e in tree(TECHNOLOGIES)))
+            list(e['name'] for e in iter_tree(TECHNOLOGIES)))
 
         assert_equal(['Python', 'Ruby', 'Mac', 'Mobile'],
-            list(e['name'] for e in tree(TECHNOLOGIES) if is_leaf(e)))
+            list(e['name'] for e in iter_tree(TECHNOLOGIES) if is_leaf(e)))
 
     def test_update_with_side_effect(self):
         technologies = {
@@ -66,7 +66,7 @@ class TestTree:
                 ]
             }]}
 
-        python = (e for e in tree(technologies) if e['name'] == 'Python').next()
+        python = (e for e in iter_tree(technologies) if e['name'] == 'Python').next()
         python.update(tag='cool')
 
         assert_equal({
