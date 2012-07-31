@@ -1,5 +1,6 @@
-from tree import iter_tree, enumerate_paths, find_by_path
-from nose.tools import assert_equal
+from tree import iter_tree, enumerate_paths, find_by_path, from_path_list, path_from_string
+from nose.tools import assert_equal, raises
+from exceptions import ValueError
 
 TECHNOLOGIES = { 
     'name': 'Technology',
@@ -79,6 +80,34 @@ class TestTree:
                 {'name': 'Ruby'}
                 ] }]},
         technologies)
+
+    def test_path_from_string(self):
+        assert_equal(['a', 'b', 'c'], path_from_string('/a/b/c'))
+    
+    @raises(ValueError)
+    def test_path_from_string(self):
+        path_from_string('a/b/c')
+
+    def test_from_path_list(self):
+        assert_equal({}, from_path_list([]))
+        assert_equal({'name': 'a'}, from_path_list(['/a']))
+        assert_equal({'name': 'a', 'children': [{'name': 'b'}]}, from_path_list(['/a/b']))
+        assert_equal({'name': 'a', 'children': [{'name': 'b'}]}, from_path_list(['/a', '/a/b']))
+        assert_equal({'name': 'a', 'children': [{'name': 'b'}]}, from_path_list(['/a/b', '/a']))
+
+        assert_equal(
+            {'name': 'a', 
+             'children': [{'name': 'b'},
+                          {'name': 'c', 
+                                'children': [{'name': 'd'}]}]}, 
+            from_path_list(['/a/b', '/a/c/d']))
+
+        assert_equal(
+            {'name': 'a', 
+             'children': [{'name': 'c', 
+                                'children': [{'name': 'd'}]},
+                          {'name': 'b'}]}, 
+            from_path_list(['/a/c/d', '/a/b']))
 
 def is_leaf(e):
     return 'children' not in e
