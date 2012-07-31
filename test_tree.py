@@ -109,5 +109,9 @@ class TestTree:
                           {'name': 'b'}]}, 
             from_path_list(['/a/c/d', '/a/b']))
 
+        assert_equal({'name': 'a', 'children': [{'name': 'b', 'children': [{'name': 'c'}, {'name': 'd'}]}]},
+            from_path_list(['/a/b/c', '/a/b/d']))
+
+
 def is_leaf(e):
     return 'children' not in e

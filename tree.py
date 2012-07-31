@@ -27,10 +27,13 @@ def insert(tree, path):
     if not path: return tree
     head, tail = path[0], path[1:]
     if not tree: return insert(create_node(name=head), tail)
-    if tree['name'] == head: return insert(tree, tail)    
+    if tree['name'] == head: 
+       insert(tree, tail)    
+       return tree
     for c in tree.get('children', []):
         if c['name'] == head:
-            return insert(c, tail)
+            insert(c, tail)
+            return tree
     tree.setdefault('children', []).append(insert(create_node(name=head), tail))
     return tree 
 
