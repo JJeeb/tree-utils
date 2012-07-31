@@ -25,12 +25,13 @@ def from_path_list(path_list):
 
 def insert(tree, path):
     if not path: return tree
-    if not tree: return insert(create_node(name=path[0]), path[1:])
-    if tree['name'] == path[0]: return insert(tree, path[1:])    
+    head, tail = path[0], path[1:]
+    if not tree: return insert(create_node(name=head), tail)
+    if tree['name'] == head: return insert(tree, tail)    
     for c in tree.get('children', []):
-        if c['name'] == path[0]:
-            return insert(c, path[1:])
-    tree.setdefault('children', []).append(insert(create_node(name=path[0]), path[1:]))
+        if c['name'] == head:
+            return insert(c, tail)
+    tree.setdefault('children', []).append(insert(create_node(name=head), tail))
     return tree 
 
 def create_node(name):
