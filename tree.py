@@ -26,7 +26,7 @@ def from_path_list(path_list):
 def insert(tree, path):
     if not path: return tree
     head, tail = path[0], path[1:]
-    if not tree: return insert(create_node(name=head), tail)
+    if not tree: return insert({'name' : head}, tail)
     if tree['name'] == head: 
        insert(tree, tail)    
        return tree
@@ -34,11 +34,18 @@ def insert(tree, path):
         if c['name'] == head:
             insert(c, tail)
             return tree
-    tree.setdefault('children', []).append(insert(create_node(name=head), tail))
+    tree.setdefault('children', []).append(insert({'name': head}, tail))
     return tree 
 
-def create_node(name):
-    return {'name': name}
+def child(tree, name):
+    child = find_child_by_name(tree, name)
+    if not child:
+        child = {'name': name}
+        tree.setdefault('children', []).append(child)
+    return child
+
+def find_child_by_name(tree, name):
+    return next((e for e in tree.get('children', []) if e['name'] == name), None)
 
 def path_from_string(path):
     if not path.startswith('/'): raise ValueError

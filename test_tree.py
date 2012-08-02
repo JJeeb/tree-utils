@@ -1,4 +1,5 @@
-from tree import iter_tree, enumerate_paths, find_by_path, from_path_list, path_from_string
+from tree import iter_tree, enumerate_paths, find_by_path, from_path_list, path_from_string, child, find_child_by_name
+
 from nose.tools import assert_equal, raises
 from exceptions import ValueError
 
@@ -111,7 +112,22 @@ class TestTree:
 
         assert_equal({'name': 'a', 'children': [{'name': 'b', 'children': [{'name': 'c'}, {'name': 'd'}]}]},
             from_path_list(['/a/b/c', '/a/b/d']))
+    
+    def test_child(self):
+        tree = {'name': 'a'}
+        assert_equal({'name': 'b'}, child(tree, 'b'))
+        assert_equal({'name': 'a', 'children': [{'name': 'b'}]}, tree)
 
+    def test_child_already_exists(self):
+        tree = {'name': 'a', 'children': [{'name': 'b'}]}
+        assert_equal({'name': 'b'}, child(tree, 'b'))
+        assert_equal({'name': 'a', 'children': [{'name': 'b'}]}, tree)
+    
+    def test_find_child_by_name(self):
+        tree = {'name': 'a', 'children': [{'name': 'b'}, {'name': 'c'}]}
+        assert_equal({'name': 'b'}, find_child_by_name(tree, 'b'))
+        assert_equal(None, find_child_by_name(tree, 'not_here'))
+         
 
 def is_leaf(e):
     return 'children' not in e
