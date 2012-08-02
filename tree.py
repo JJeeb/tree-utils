@@ -21,20 +21,15 @@ def find_by_path(t, search_path):
 
 def from_path_list(path_list):
     paths = (path_from_string(p) for p in path_list)
-    return reduce(insert, paths, {})
+    root = {'name': 'root', 'children': []}
+    for path in paths:
+        insert(root, path)
+    return root 
 
 def insert(tree, path):
-    if not path: return tree
-    head, tail = path[0], path[1:]
-    if not tree: return insert({'name' : head}, tail)
-    if tree['name'] == head: 
-       insert(tree, tail)    
-       return tree
-    for c in tree.get('children', []):
-        if c['name'] == head:
-            insert(c, tail)
-            return tree
-    tree.setdefault('children', []).append(insert({'name': head}, tail))
+    current = tree
+    for e in path:
+        current = child(current, e)
     return tree 
 
 def child(tree, name):

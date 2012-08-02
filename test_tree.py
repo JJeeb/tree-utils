@@ -90,27 +90,42 @@ class TestTree:
         path_from_string('a/b/c')
 
     def test_from_path_list(self):
-        assert_equal({}, from_path_list([]))
-        assert_equal({'name': 'a'}, from_path_list(['/a']))
-        assert_equal({'name': 'a', 'children': [{'name': 'b'}]}, from_path_list(['/a/b']))
-        assert_equal({'name': 'a', 'children': [{'name': 'b'}]}, from_path_list(['/a', '/a/b']))
-        assert_equal({'name': 'a', 'children': [{'name': 'b'}]}, from_path_list(['/a/b', '/a']))
+        assert_equal({'name': 'root', 'children': []}, from_path_list([]))
+        assert_equal({'name': 'root', 'children': [{'name': 'a'}]}, 
+                    from_path_list(['/a']))
+        assert_equal({'name': 'root', 
+                      'children': [{'name': 'a', 'children': [{'name': 'b'}]}]}, 
+                    from_path_list(['/a/b']))
+        assert_equal({'name': 'root', 
+                      'children': [{'name': 'a', 'children': [{'name': 'b'}]}]}, 
+                    from_path_list(['/a', '/a/b']))
+        assert_equal({'name': 'root', 
+                      'children': [{'name': 'a', 'children': [{'name': 'b'}]}]}, 
+                    from_path_list(['/a/b', '/a']))
 
         assert_equal(
-            {'name': 'a', 
-             'children': [{'name': 'b'},
-                          {'name': 'c', 
-                                'children': [{'name': 'd'}]}]}, 
+            {'name': 'root', 
+             'children': 
+                [{'name': 'a',
+                 'children': [{'name': 'b'}, 
+                              {'name': 'c', 'children': [{'name': 'd'}]}]}]}, 
             from_path_list(['/a/b', '/a/c/d']))
 
         assert_equal(
-            {'name': 'a', 
-             'children': [{'name': 'c', 
-                                'children': [{'name': 'd'}]},
-                          {'name': 'b'}]}, 
+            {'name': 'root', 
+             'children': 
+                [{'name': 'a', 
+                  'children':
+                     [{'name': 'c', 'children': [{'name': 'd'}]},
+                 {'name': 'b'}]}]}, 
             from_path_list(['/a/c/d', '/a/b']))
 
-        assert_equal({'name': 'a', 'children': [{'name': 'b', 'children': [{'name': 'c'}, {'name': 'd'}]}]},
+        assert_equal(
+            {'name': 'root', 
+             'children':
+                [{'name': 'a', 
+                  'children':
+                     [{'name': 'b', 'children': [{'name': 'c'}, {'name': 'd'}]}]}]},
             from_path_list(['/a/b/c', '/a/b/d']))
     
     def test_child(self):
