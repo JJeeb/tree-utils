@@ -19,10 +19,9 @@ def enumerate_paths(tree,
 def find_by_path(t, search_path):
     return next((node for path, node in enumerate_paths(t) if path == search_path), None)
 
-def from_path_list(path_list):
-    paths = (path_from_string(p) for p in path_list)
+def from_path_list(paths):
     root = {'name': 'root', 'children': []}
-    for path in paths:
+    for path in map(path_from_string, paths):
         insert(root, path)
     return root 
 
@@ -30,7 +29,6 @@ def insert(tree, path):
     current = tree
     for e in path:
         current = child(current, e)
-    return tree 
 
 def child(tree, name):
     child = find_child_by_name(tree, name)
